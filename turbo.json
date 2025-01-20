@@ -3,6 +3,15 @@
   "ui": "tui",
   "envMode": "strict",
   "tasks": {
+    "devenv": {
+      "cache": false,
+      "outputs": []
+    },
+    "@repo/scripts#dev": {
+      "dependsOn": ["chain#dev"],
+      "cache": false,
+      "outputs": []
+    },
     "build": {
       "dependsOn": ["^build"]
     },
@@ -13,17 +22,16 @@
       "dependsOn": ["^check-types"]
     },
     "chain#dev": {
-      "env": ["RPC_URL"],
+      "env": ["PUBLIC_RPC_URL"],
       "cache": false
     },
     "dev": {
-      "dependsOn": ["chain#dev"],
-      "env": ["RPC_URL"],
+      "dependsOn": ["chain#dev", "@repo/scripts#dev"],
+      "env": ["NEXT_PUBLIC_RPC_URL"],
       "cache": false,
       "persistent": true
     },
     "doc": {
-      "env": ["RPC_URL"],
       "cache": false
     },
     "clean": {

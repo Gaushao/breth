@@ -1,6 +1,7 @@
 {
   "extends": "@repo/typescript-config/nextjs.json",
   "compilerOptions": {
+    "target": "ESNext",
     "plugins": [
       {
         "name": "next"
@@ -16,5 +17,10 @@
   ],
   "exclude": [
     "node_modules"
-  ]
+  ],
+  "paths": {
+    "@repo/*": [
+      "../../packages/*"
+    ]
+  }
 }

@@ -118,9 +118,18 @@ importers:
 
   apps/web:
     dependencies:
+      '@repo/env':
+        specifier: workspace:*
+        version: link:../../packages/env
+      '@repo/srv':
+        specifier: workspace:*
+        version: link:../../packages/srv
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      ethers:
+        specifier: ^6.13.5
+        version: 6.13.5
       next:
         specifier: ^15.1.0
         version: 15.1.4(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -149,6 +158,21 @@ importers:
       '@types/react-dom':
         specifier: 18.3.0
         version: 18.3.0
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
+
+  packages/env:
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: ^20
+        version: 20.17.13
       typescript:
         specifier: 5.5.4
         version: 5.5.4
@@ -189,10 +213,53 @@ importers:
         specifier: ^8.15.0
         version: 8.20.0(eslint@9.18.0)(typescript@5.5.4)
 
+  packages/scripts:
+    devDependencies:
+      '@dotenvx/dotenvx':
+        specifier: ^1.33.0
+        version: 1.33.0
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: ^20
+        version: 20.17.13
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
+
+  packages/srv:
+    dependencies:
+      '@repo/env':
+        specifier: workspace:*
+        version: link:../env
+      ethers:
+        specifier: ^6.13.5
+        version: 6.13.5
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/node':
+        specifier: ^20
+        version: 20.17.13
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
+
   packages/typescript-config: {}
 
   packages/ui:
     dependencies:
+      '@repo/srv':
+        specifier: workspace:*
+        version: link:../srv
       react:
         specifier: ^19.0.0
         version: 19.0.0

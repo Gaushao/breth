@@ -80,7 +80,7 @@ d9600f8ac2c4   brethnet            RUNNING    Sun, 12 Jan 2025 18:50:42 -03
 kurtosis enclave inspect d9600f8ac2c4
 ```
 
-use any `el-` service rpc url to update `RPC_URL` in `.env`
+use any `el-` service rpc url to update `PUBLIC_RPC_URL` in `.env`
 
 ```
 rpc: 8545/tcp -> 127.0.0.1:32842

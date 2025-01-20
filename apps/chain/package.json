@@ -4,11 +4,11 @@
   "description": "breth/chain - brazilian ethereum network blockchain",
   "license": "MIT",
   "scripts": {
-    "dev": "bash scripts/run.sh",
+    "dev": "bash scripts/dev.sh",
     "clean": "bash scripts/kurtosisclean.sh",
     "restart": "kurtosis clean -a && kurtosis run --enclave brethnet github.com/ethpandaops/ethereum-package --args-file args.yaml",
     "docker:clean": "docker system prune -a --volumes",
-    "rpc": "bash scripts/rpc_url.sh",
+    "rpc": "bash scripts/devenv.sh",
     "deploy": "bash scripts/deploy.sh",
     "balances": "npx hardhat balances --network localnet",
     "doc": "npx hardhat docgen --network localnet"
