@@ -9,7 +9,7 @@ export const EMPTY_USE_BOOLEAN = {
   falsy: () => { }
 }
 
-export default function useBoolean(init = false) {
+export function useBoolean(init = false) {
   const [bool, setter] = useState(init)
   return {
     bool,

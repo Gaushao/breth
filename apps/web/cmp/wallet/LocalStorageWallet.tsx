@@ -1,9 +1,8 @@
 'use client'
 
-import { breth } from "@repo/srv"
-import { LocalStorageWalletProvider, useLocalStorageWalletContext } from "@repo/ui"
+import { breth, isPrivateKey } from "@repo/srv"
+import { LocalStorageWalletCtx, useLocalStorageWalletCtx, useLocalStorageWalletCtxBalance } from "@repo/ui"
 import { KeyPassForm, PasswordForm } from "../form"
-import { isPrivateKey } from "../../utils"
 
 function Decryption() {
   const {
@@ -12,7 +11,7 @@ function Decryption() {
     decrypting,
     reset,
     decrypt,
-  } = useLocalStorageWalletContext()
+  } = useLocalStorageWalletCtx()
   return decrypted ? <>
     <h2>decrypted <button onClick={() => resetDecrypt()}>close</button></h2>
     <h2>private key {decrypted.privateKey}</h2>
@@ -31,7 +30,7 @@ function Encryption() {
     encrypting,
     resetEncrypt,
     encrypt,
-  } = useLocalStorageWalletContext()
+  } = useLocalStorageWalletCtx()
   return encrypted ? <Decryption /> : encrypting ? 'encrypting...' : <h2>
     <KeyPassForm onSubmit={({ key, password }) => (key && isPrivateKey(key))
       ? breth.loadWallet(key).encrypt(password).then(s => {
@@ -41,14 +40,14 @@ function Encryption() {
 }
 
 function Addresses() {
-  const { wallets, selected, select } = useLocalStorageWalletContext()
+  const { wallets, selected, select } = useLocalStorageWalletCtx()
   return wallets.filter(w => w.address !== selected?.address).map(w => <h2 key={w.address}>
     {w.address} <button onClick={() => { select(w.address) }}>select</button>
   </h2>)
 }
 
 function Create() {
-  const { phrase, add } = useLocalStorageWalletContext()
+  const { phrase, add } = useLocalStorageWalletCtx()
   return phrase ? <>
     <h2>phrase</h2>
     <p>{phrase}</p>
@@ -56,17 +55,25 @@ function Create() {
   </> : null
 }
 
+export function Balance() {
+  const { address, balance: { data: balance } } = useLocalStorageWalletCtxBalance()
+  if (!address) return null
+  return <>
+    <h2>address {address}</h2>
+    <h2>balance {balance}</h2>
+  </>
+}
+
 function Content() {
-  const { address } = useLocalStorageWalletContext()
   return <>
     <h1>local storage wallet</h1>
-    {address && <h2>address {address}</h2>}
+    <Balance />
     <Encryption />
     <Create />
     <Addresses />
   </>
 }
 
-const LocalStorageWallet = () => <LocalStorageWalletProvider><Content /></LocalStorageWalletProvider>
+const LocalStorageWallet = () => <LocalStorageWalletCtx><Content /></LocalStorageWalletCtx>
 
 export default LocalStorageWallet

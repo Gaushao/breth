@@ -1,1 +1,1 @@
-export * from './LocalStorageWallet'
+export * from './LocalStorageWalletCtx'

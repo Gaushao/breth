@@ -1,5 +1,6 @@
 import { JsonRpcProvider, Wallet, HDNodeWallet } from "ethers"
 import { PUBLIC_RPC_URL } from "@repo/env/"
+import { getAddress0x } from "./utils"
 
 export default class BrethService {
 
@@ -19,5 +20,9 @@ export default class BrethService {
   }
   getPhrase(wallet?: Wallet | HDNodeWallet) {
     return (wallet as HDNodeWallet)?.mnemonic?.phrase
+  }
+  async getBalance(address?: string) {
+    const addr0x = getAddress0x(address)
+    return addr0x ? this.provider.getBalance(addr0x) : 0
   }
 }
