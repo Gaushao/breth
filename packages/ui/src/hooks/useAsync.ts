@@ -67,21 +67,16 @@ export function useAsyncOnMount<F extends AsyncCallback>(cb: F) {
 export function useAsyncOnChange<F extends AsyncCallback>(
   cb: F, params: Parameters<F>
 ) {
-  const [cached, cache] = useState<Parameters<F>>(null as unknown as Parameters<F>)
+  const ref = useRef({ cache: [] as unknown as typeof params })
   const handler = useAsync(cb)
   const { fetch } = handler
   useEffect(() => {
-    if (!params) return
-    cache(current => {
-      if (JSON.stringify(current) !== JSON.stringify(params)) {
-        fetch(...params)
-        return params
-      }
-      return current
-    })
+    if (!params || JSON.stringify(ref.current.cache) === JSON.stringify(params)) return
+    ref.current.cache = params
+    fetch(...params)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params])
-  const refetch = useCallback(() => fetch(...cached), [cached])
-  return { ...handler, cache: cached, refetch }
+  return handler
 }
 
 export function useAsyncCatcher<F extends AsyncCallback>(cb: F, handle: (e: unknown) => void) {
